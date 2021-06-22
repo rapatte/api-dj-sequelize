@@ -1,14 +1,19 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Clubs", {
+    await queryInterface.createTable("DjMusicalGenres", {
       id: {
         allowNull: false,
         autoIncrement: false,
         primaryKey: true,
         type: Sequelize.UUID,
       },
-      name: {
-        type: Sequelize.STRING,
+      dj_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+      },
+      musicalgenre_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
       },
       createdAt: {
         allowNull: false,
@@ -21,6 +26,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Clubs");
+    await queryInterface.dropTable("DjMusicalGenres");
   },
 };
