@@ -6,6 +6,7 @@ module.exports = {
         autoIncrement: false,
         primaryKey: true,
         type: Sequelize.UUID,
+        default: Sequelize.fn("uuid_generate_v4"),
       },
       url_name: {
         type: Sequelize.STRING,
@@ -54,6 +55,7 @@ module.exports = {
       },
     });
   },
+  // eslint-disable-next-line no-unused-vars
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable("Djs");
   },
