@@ -1,5 +1,5 @@
 const now = new Date();
-const uuid = require("uuid");
+const uuid = require("uuid").v4;
 
 module.exports = [
   { id: uuid(), name: "Open Format", createdAt: now, updatedAt: now },
