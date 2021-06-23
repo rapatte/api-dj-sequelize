@@ -1,16 +1,29 @@
-// const { Club } = require("../models");
+const { Club } = require("../models");
+const { BadRequestError } = require("../helpers/errors")
 
 const clubsController = {
   getAllClubs: async () => {
-    // Your code here
-    return {};
+    const clubs = Club.findAll({
+      order: [["name", "ASC"]],
+      attributes: ["name"],
+      raw: true,
+    });
+    return clubs;
   },
   getClub: async (name) => {
     // Your code here
     return {};
   },
   addClub: async (data) => {
-    // Your code here
+    const { name } = data;
+    const club = await Club.findOne({
+      where: {
+        name,
+      },
+    });
+    if (club) {
+      throw new BadRequestError("")
+    }
     return {};
   },
 };
