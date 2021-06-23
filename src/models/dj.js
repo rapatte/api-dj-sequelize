@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.Club);
-      this.belongsTo(models.MusicalGenres, {
+      this.belongsTo(models.Musicalgenre, {
         through: "DjMusicalGenre",
         foreignKey: "dj_id",
         as: "musical_genres",

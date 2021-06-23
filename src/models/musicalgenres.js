@@ -1,7 +1,7 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class Musicalgenres extends Model {
+  class Musicalgenre extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  Musicalgenres.init(
+  Musicalgenre.init(
     {
       id: {
         type: DataTypes.UUID,
@@ -27,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Musicalgenres",
+      modelName: "Musicalgenre",
     }
   );
-  return Musicalgenres;
+  return Musicalgenre;
 };
