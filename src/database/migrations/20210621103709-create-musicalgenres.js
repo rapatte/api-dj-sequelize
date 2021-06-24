@@ -3,7 +3,6 @@ module.exports = {
     await queryInterface.createTable("Musicalgenres", {
       id: {
         allowNull: false,
-        autoIncrement: false,
         primaryKey: true,
         type: Sequelize.UUID,
         default: Sequelize.fn("uuid_generate_v4"),

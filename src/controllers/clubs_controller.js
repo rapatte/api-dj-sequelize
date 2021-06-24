@@ -30,10 +30,7 @@ const clubsController = {
       },
     });
     if (club) {
-      throw new BadRequestError(
-        "Le club existe déjà",
-        "Le club existe déjà dans la base de donnée"
-      );
+      throw new BadRequestError("Ressource existante", "Le club existe déjà");
     }
     const newClub = await Club.create({ name });
     return newClub;
