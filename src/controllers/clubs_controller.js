@@ -1,5 +1,5 @@
 const { Club } = require("../models");
-const { BadRequestError } = require("../helpers/errors")
+const { BadRequestError, NotFoundError } = require("../helpers/errors");
 
 const clubsController = {
   getAllClubs: async () => {
@@ -11,8 +11,16 @@ const clubsController = {
     return clubs;
   },
   getClub: async (name) => {
-    // Your code here
-    return {};
+    const club = await Club.findOne({
+      attributes: ["id", "name"],
+      where: {
+        name,
+      },
+    });
+    if (!club) {
+      throw new NotFoundError("Ressource introuvable", "Ce club n'existe pas");
+    }
+    return club;
   },
   addClub: async (data) => {
     const { name } = data;
@@ -22,9 +30,13 @@ const clubsController = {
       },
     });
     if (club) {
-      throw new BadRequestError("")
+      throw new BadRequestError(
+        "Le club existe déjà",
+        "Le club existe déjà dans la base de donnée"
+      );
     }
-    return {};
+    const newClub = await Club.create({ name });
+    return newClub;
   },
 };
 
