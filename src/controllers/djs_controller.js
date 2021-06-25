@@ -1,27 +1,25 @@
 /* eslint-disable camelcase */
 // const { pick } = require("lodash");
-// const { Dj, Musicalgenre, DjMusicalgenre } = require("../models");
-// const { NotFoundError } = require("../helpers/errors");
 const { BadRequestError, NotFoundError } = require("../helpers/errors");
-const { Dj, Club } = require("../models");
+const { Dj, Club, Musicalgenre, DjMusicalgenre } = require("../models");
 
 const djsController = {
   getAllDjs: async () => {
     const djs = await Dj.findAll({
       order: [["name", "ASC"]],
-      attributes: [
-        "url_name",
-        "name",
-        "biography",
-        "soundcloud",
-        "facebook",
-        "instagram",
-        "spotify",
-        "beatport",
-        "mixcloud",
-        "youtube",
+      attributes: { exclude: ["createdAt", "updatedAt", "club_id"] },
+      include: [
+        {
+          model: Club,
+          as: "clubs",
+          attributes: ["name"],
+        },
+        {
+          model: Musicalgenre,
+          as: "musical_genres",
+          through: { attributes: [] },
+        },
       ],
-      raw: true,
     });
     return djs;
   },
@@ -31,8 +29,14 @@ const djsController = {
       where: {
         name,
       },
-      attributes: ["id", "name"],
-      raw: true,
+      attributes: { exclude: ["createdAt", "updatedAt", "club_id"] },
+      include: [
+        {
+          model: Club,
+          attributes: ["name"],
+          as: "clubs",
+        },
+      ],
     });
     if (!dj) {
       throw new NotFoundError("Ressource introuvable", "Ce dj n'existe pas");
@@ -59,6 +63,21 @@ const djsController = {
       throw new NotFoundError("Ressource introuvable", "Ce club n'existe pas");
     }
     const newDj = await Dj.create(data);
+    const musicalGenre = await Musicalgenre.findOne({
+      where: {
+        name: data.musical_genres[0],
+      },
+    });
+    if (!musicalGenre) {
+      throw new NotFoundError(
+        "Ressource introuvable",
+        "Ce genre de musique n'existe pas"
+      );
+    }
+    await DjMusicalgenre.create({
+      dj_id: newDj.id,
+      musicalgenre_id: musicalGenre.id,
+    });
     return newDj;
   },
 
