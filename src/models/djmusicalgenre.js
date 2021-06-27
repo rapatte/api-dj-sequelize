@@ -23,10 +23,12 @@ module.exports = (sequelize, DataTypes) => {
       dj_id: {
         allowNull: false,
         type: DataTypes.UUID,
+        onDelete: "CASCADE",
       },
       musicalgenre_id: {
         allowNull: false,
         type: DataTypes.UUID,
+        onDelete: "CASCADE",
       },
     },
     {
