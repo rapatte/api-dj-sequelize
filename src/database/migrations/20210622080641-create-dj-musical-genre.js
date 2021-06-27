@@ -1,9 +1,8 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("DjMusicalGenres", {
+    await queryInterface.createTable("DjMusicalgenres", {
       id: {
         allowNull: false,
-        autoIncrement: false,
         primaryKey: true,
         type: Sequelize.UUID,
         default: Sequelize.fn("uuid_generate_v4"),
@@ -15,6 +14,7 @@ module.exports = {
           model: "Djs",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       musicalgenre_id: {
         allowNull: false,
@@ -23,6 +23,7 @@ module.exports = {
           model: "Musicalgenres",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +37,6 @@ module.exports = {
   },
   // eslint-disable-next-line no-unused-vars
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("DjMusicalGenres");
+    await queryInterface.dropTable("DjMusicalgenres");
   },
 };

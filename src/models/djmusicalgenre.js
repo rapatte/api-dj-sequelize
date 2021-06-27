@@ -1,7 +1,7 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class DjMusicalGenre extends Model {
+  class DjMusicalgenre extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Musicalgenre, { foreignKey: "musicalgenre_id" });
     }
   }
-  DjMusicalGenre.init(
+  DjMusicalgenre.init(
     {
       id: {
         allowNull: false,
@@ -23,16 +23,18 @@ module.exports = (sequelize, DataTypes) => {
       dj_id: {
         allowNull: false,
         type: DataTypes.UUID,
+        onDelete: "CASCADE",
       },
       musicalgenre_id: {
         allowNull: false,
         type: DataTypes.UUID,
+        onDelete: "CASCADE",
       },
     },
     {
       sequelize,
-      modelName: "DjMusicalGenre",
+      modelName: "DjMusicalgenre",
     }
   );
-  return DjMusicalGenre;
+  return DjMusicalgenre;
 };
